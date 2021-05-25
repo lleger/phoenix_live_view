@@ -112,6 +112,11 @@ defmodule Phoenix.LiveViewTest.ElementsLive do
     <form id="trigger-form-value" action="/not_found" method="POST" phx-submit="form-submit-trigger"
           <%= @trigger_action && "phx-trigger-action" %>>
     </form>
+
+    <form id="trigger-form-method" action="/not_found" method="POST" phx-submit="form-submit-trigger"
+          <%= @trigger_action && "phx-trigger-action" %>>
+      <input name="_method" type="hidden" value="put">
+    </form>
     """
   end
 

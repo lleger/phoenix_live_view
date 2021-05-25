@@ -433,13 +433,22 @@ defmodule Phoenix.LiveView.ElementsTest do
       assert conn.method == "GET"
       assert conn.request_path == "/elements"
 
-      conn = view |> form("#trigger-form-default", %{"foo" => "bar"}) |> follow_trigger_action(conn)
+      conn =
+        view |> form("#trigger-form-default", %{"foo" => "bar"}) |> follow_trigger_action(conn)
+
       assert conn.method == "GET"
       assert conn.request_path == "/elements"
       assert conn.query_string == "foo=bar"
 
       conn = view |> form("#trigger-form-value", %{"baz" => "bat"}) |> follow_trigger_action(conn)
       assert conn.method == "POST"
+      assert conn.request_path == "/not_found"
+      assert conn.params == %{"baz" => "bat"}
+
+      conn =
+        view |> form("#trigger-form-method", %{"baz" => "bat"}) |> follow_trigger_action(conn)
+
+      assert conn.method == "PUT"
       assert conn.request_path == "/not_found"
       assert conn.params == %{"baz" => "bat"}
     end
